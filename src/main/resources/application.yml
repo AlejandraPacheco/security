@@ -1,0 +1,11 @@
+# Definimos en que puerto correra
+server:
+  port: 7777
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/manfred
+    username: postgres
+    password: ABCabc123
+
