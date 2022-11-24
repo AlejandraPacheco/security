@@ -1,2 +1,12 @@
-### Autenticacion correcta
+### Test Auth
 GET http://localhost:7777/api/v1/auth/1
+
+### Autenticacion
+POST http://localhost:7777/api/v1/auth/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "jperez@gmail.com",
+  "password": "12345678"
+}

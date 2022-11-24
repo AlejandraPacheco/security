@@ -13,9 +13,22 @@ public interface PersonDao {
                 tx_user,
                 tx_date,
                 tx_host
-            FROM PERSON
-            WHERE person_id = #{personId};
+            FROM 
+                PERSON
+            WHERE 
+                person_id = #{personId}
+                AND status = 1;
             """)
     Person findByPrimaryKey(Integer personId);
+
+    @Select("""
+            SELECT password
+            FROM 
+                PERSON
+            WHERE 
+                email= #{email}
+                AND status = 1;
+            """)
+    String findByEmailAndPassword(String email);
 }
 
