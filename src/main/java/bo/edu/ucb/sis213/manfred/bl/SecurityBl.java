@@ -16,6 +16,11 @@ public class SecurityBl {
         this.personDao = personDao;
     }
 
+    /**
+     * Metodo realizado para probar la conexion a la BBDD
+     * @param personId
+     * @return
+     */
     public PersonDto getPersonByPk(Integer personId){
         Person person = personDao.findByPrimaryKey(personId);
         //Se transforma la entidad de la BBDD a un DTO para retornar via API
@@ -26,7 +31,7 @@ public class SecurityBl {
     // El siguiente metodo realiza la autenticacion del sistema, va a buscar al repositorio de BBDD
     // la contraseña del usuario y la compara con su equivelente en BCrypt
     public AuthResDto authenticate(AuthReqDto credentials){
-        AuthResDto result = null;
+        AuthResDto result = new AuthResDto();
         System.out.println("Comenzando el proceso de autenticacion con: " + credentials);
         String currentPasswordInBCrypt = personDao.findByEmailAndPassword(credentials.email());
         System.out.println("Se obtuvo la siguiente contraseña de bbdd: " + currentPasswordInBCrypt);
@@ -50,5 +55,9 @@ public class SecurityBl {
             throw new RuntimeException("Forbiden the secret and password are wrong");
         }
         return result;
+    }
+
+    public void createPerson(){
+
     }
 }

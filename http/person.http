@@ -1,0 +1,9 @@
+## Creamos nuevos usuarios (personas)
+POST http://localhost:7777/api/v1/person
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "alejandra@gmail.com",
+  "password": "ABCabc123"
+}
