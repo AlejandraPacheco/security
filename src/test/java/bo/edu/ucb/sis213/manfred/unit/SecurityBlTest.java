@@ -17,7 +17,7 @@ public class SecurityBlTest {
         // personDao.findByEmailAndPassword(credentials.email());
         // Sabido a que es prueba unitaria debemos crear el comportamiento de lo que va a hacer al mock
         // Cuando se llame a findByEmailAndPassword con el argumento "alejandra@gmail.com"
-        Mockito.when(personDao.findByEmailAndPassword("alejandra@gmail.com"))
+        Mockito.when(personDao.findPasswordByEmail("alejandra@gmail.com"))
                 .thenReturn("$2a$12$THAiW3mBVlkuOx6p2.WrF.zxNsbZSIl6fNAG0KZyAzGsQCiV41nRm");
         // Que clase estoy probando: SecurityBl
         SecurityBl securityBl = new SecurityBl(personDao);

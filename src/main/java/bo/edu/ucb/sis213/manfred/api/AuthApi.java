@@ -4,6 +4,7 @@ import bo.edu.ucb.sis213.manfred.bl.SecurityBl;
 import bo.edu.ucb.sis213.manfred.dto.AuthReqDto;
 import bo.edu.ucb.sis213.manfred.dto.AuthResDto;
 import bo.edu.ucb.sis213.manfred.dto.PersonDto;
+import bo.edu.ucb.sis213.manfred.dto.ResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,12 @@ public class AuthApi {
     }
 
     @PostMapping()
-    public AuthResDto authentication(@RequestBody AuthReqDto authReqDto){
-        return securityBl.authenticate(authReqDto);
+    public ResponseDto<AuthResDto> authentication(@RequestBody  AuthReqDto authReqDto) {
+        if (authReqDto != null && authReqDto.email() != null && authReqDto.password() != null) {
+            // Retorna los tokens, null (porque no hay error), true porque fue exitoso
+            return new ResponseDto<>(securityBl.authenticate(authReqDto), null, true);
+        } else {
+            return new ResponseDto<>(null, "Credenciales incorrectas", false);
+        }
     }
 }

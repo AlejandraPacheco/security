@@ -23,6 +23,23 @@ public interface PersonDao {
     Person findByPrimaryKey(Integer personId);
 
     @Select("""
+            SELECT
+                person_id,
+                email,
+                password,
+                status,
+                tx_user,
+                tx_date,
+                tx_host
+            FROM 
+                PERSON
+            WHERE 
+                email = #{email}
+                AND status = 1;
+            """)
+    Person findByEmail(String email);
+
+    @Select("""
             SELECT password
             FROM 
                 PERSON
@@ -30,7 +47,7 @@ public interface PersonDao {
                 email= #{email}
                 AND status = 1;
             """)
-    String findByEmailAndPassword(String email);
+    String findPasswordByEmail(String email);
 
     @Insert("""
             INSERT INTO 
