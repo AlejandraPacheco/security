@@ -833,3 +833,9 @@ ALTER TABLE wanted_techtools_user ADD CONSTRAINT wanted_techtools_user_user_abou
 ;
 
 -- End of file.
+
+-- Para asegurar que no tengamos emails duplicados, creamos un índice único
+-- constraint de unique para la tabla person
+alter table person
+add constraint person_email
+unique (email);

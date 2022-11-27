@@ -1,24 +1,31 @@
 package bo.edu.ucb.sis213.manfred.bl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import bo.edu.ucb.sis213.manfred.dao.ManfredRoleDao;
 import bo.edu.ucb.sis213.manfred.dao.PersonDao;
 import bo.edu.ucb.sis213.manfred.dto.AuthReqDto;
 import bo.edu.ucb.sis213.manfred.dto.AuthResDto;
 import bo.edu.ucb.sis213.manfred.dto.PersonDto;
+import bo.edu.ucb.sis213.manfred.entity.ManfredRole;
 import bo.edu.ucb.sis213.manfred.entity.Person;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SecurityBl {
     private PersonDao personDao;
 
-    public SecurityBl(PersonDao personDao) {
+    private ManfredRoleDao manfredRoleDao;
+
+    public SecurityBl(PersonDao personDao, ManfredRoleDao manfredRoleDao) {
         this.personDao = personDao;
+        this.manfredRoleDao = manfredRoleDao;
     }
 
     /**
@@ -50,7 +57,14 @@ public class SecurityBl {
             if(bcryptResult.verified){
                 // Se genera el token
                 System.out.println("Las contraseñas coinciden, se genera el token");
-                result = generateTokenJwt(credentials.email(), 300, new String[]{"admin", "user"});
+                // Consultamos los roles que tiene la persona
+                List<ManfredRole> roles = manfredRoleDao.findRolesByEmail(credentials.email());
+                List<String> rolesAsString = new ArrayList<>();
+                for (ManfredRole role: roles) {
+                    rolesAsString.add(role.getName());
+                    System.out.println("Rol: " + role.getName());
+                }
+                result = generateTokenJwt(credentials.email(), 300, rolesAsString);
                 //result.setToken("TEST TOKEN");
                 //result.setRefresh("TEST REFRESH TOKEN");
             } else{
@@ -68,7 +82,8 @@ public class SecurityBl {
 
     }
 
-    private AuthResDto generateTokenJwt(String subject, int expirationTimeInSeconds, String [] roles){
+    // El siguiente metodo genera los tokens JWT
+    private AuthResDto generateTokenJwt(String subject, int expirationTimeInSeconds, List<String> roles){
         AuthResDto result = new AuthResDto();
         // Generamos el token principal
         try {
@@ -76,11 +91,19 @@ public class SecurityBl {
             String token = JWT.create()
                     .withIssuer("ucb")
                     .withSubject(subject)
-                    .withArrayClaim("roles", roles)
+                    .withArrayClaim("roles", roles.toArray(new String[roles.size()]))
+                    .withClaim("refresh", false)
                     .withExpiresAt(new Date(System.currentTimeMillis() + (expirationTimeInSeconds * 1000)))
                     .sign(algorithm);
             result.setToken(token);
-            result.setRefresh("TEST REFRESH TOKEN");
+            String refreshToken = JWT.create()
+                    .withIssuer("ucb")
+                    .withSubject(subject)
+                    .withClaim("refresh", true)
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (expirationTimeInSeconds * 1000 * 2)))
+                    .sign(algorithm);
+            result.setToken(token);
+            result.setRefresh(refreshToken);
         } catch (JWTCreationException exception){
             //Invalid Signing configuration / Couldn't convert Claims.
             throw new RuntimeException("Error al generar el token", exception);
