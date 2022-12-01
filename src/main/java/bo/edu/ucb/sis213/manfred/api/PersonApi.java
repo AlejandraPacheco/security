@@ -29,9 +29,6 @@ public class PersonApi {
             // Do nothing
         }
         try {
-            String jwt = AuthUtil.getTokenFromHeader(headers);
-            // Si no tiene error, se lanzaraá una excepción
-            AuthUtil.verifyHasRole(jwt, "CREAR_USUARIO"); // Authorization
             personBl.createPerson(createPersonDto);
             return new ResponseDto<>("Usuario creado correctamente", null, true);
         } catch (ManfredException ex) {

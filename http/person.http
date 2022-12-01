@@ -4,8 +4,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "camila@gmail.com",
-  "password": "ABCabc123"
+  "email": "ecomoda@gmail.com",
+  "password": "moda2022"
 }
 
 ### Consultamos el usuario autenticado

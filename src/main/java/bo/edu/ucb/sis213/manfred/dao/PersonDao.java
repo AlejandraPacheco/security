@@ -57,5 +57,10 @@ public interface PersonDao {
             VALUES (#{email}, #{password}, 1, 'anonymous', now(), 'localhost');
             """)
     void createPerson(Person person);
+
+    @Select("""
+            SELECT MAX(person_id) FROM person;
+            """)
+    Integer maximoPersonId();
 }
 

@@ -1,0 +1,12 @@
+## Creamos nuevas companies
+POST http://localhost:7777/api/v1/company
+Content-Type: application/json
+Accept: application/json
+
+{
+  "companyName": "Puma",
+  "description": "Puma es una empresa de ropa deportiva",
+  "companyWebsite": "www.puma.com",
+  "managerName": "Puma Manager",
+  "managerPhoneNumber": 987654321
+}

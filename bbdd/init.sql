@@ -49,3 +49,9 @@ FROM
         LEFT JOIN manfred_role mf on mgr.role_id = mf.role_id
 WHERE
         per.email = 'mgomez@gmail.com';
+
+INSERT INTO company (person_id, company_name, logo_url, description, company_website,
+            manager_name, manager_phone_number, status, tx_user, tx_date, tx_host)
+VALUES (1, 'Empresa 1', null, 'Empresa 1', 'http://www.empresa1.com', 'Juan Perez', '123456789', 1, 'admin', now(), 'localhost');
+
+SELECT MAX(person_id) FROM person;
