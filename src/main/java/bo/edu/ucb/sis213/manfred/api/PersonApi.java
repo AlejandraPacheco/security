@@ -23,6 +23,11 @@ public class PersonApi {
 
     @PostMapping
     public ResponseDto<String> createPerson(@RequestHeader Map<String, String> headers, @RequestBody CreatePersonDto createPersonDto) {
+        try{
+            Thread.sleep(3000);
+        } catch (Exception ex){
+            // Do nothing
+        }
         try {
             String jwt = AuthUtil.getTokenFromHeader(headers);
             // Si no tiene error, se lanzaraá una excepción
@@ -40,6 +45,11 @@ public class PersonApi {
      */
     @GetMapping("/")
     public ResponseDto<CompanyPerson> getCompanyFromToken(@RequestHeader Map<String, String> headers) {
+        try{
+            Thread.sleep(3000);
+        } catch (Exception ex){
+            // Do nothing
+        }
         try {
             String email = AuthUtil.isUserAuthenticated(AuthUtil.getTokenFromHeader(headers));
             return new ResponseDto<>(this.personBl.findByEmail(email), null, true);
