@@ -1,5 +1,6 @@
 package bo.edu.ucb.sis213.manfred.api;
 
+import bo.edu.ucb.sis213.manfred.util.ManfredException;
 import bo.edu.ucb.sis213.manfred.bl.SecurityBl;
 import bo.edu.ucb.sis213.manfred.dto.AuthReqDto;
 import bo.edu.ucb.sis213.manfred.dto.AuthResDto;
@@ -25,7 +26,12 @@ public class AuthApi {
     public ResponseDto<AuthResDto> authentication(@RequestBody  AuthReqDto authReqDto) {
         if (authReqDto != null && authReqDto.email() != null && authReqDto.password() != null) {
             // Retorna los tokens, null (porque no hay error), true porque fue exitoso
-            return new ResponseDto<>(securityBl.authenticate(authReqDto), null, true);
+            try{
+                return new ResponseDto<>(securityBl.authenticate(authReqDto), null, true);
+            } catch (ManfredException ex){
+                return new ResponseDto<>(null, ex.getMessage(), false);
+            }
+
         } else {
             return new ResponseDto<>(null, "Credenciales incorrectas", false);
         }

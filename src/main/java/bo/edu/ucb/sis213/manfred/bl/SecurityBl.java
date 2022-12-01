@@ -8,6 +8,7 @@ import bo.edu.ucb.sis213.manfred.dto.AuthResDto;
 import bo.edu.ucb.sis213.manfred.dto.PersonDto;
 import bo.edu.ucb.sis213.manfred.entity.ManfredRole;
 import bo.edu.ucb.sis213.manfred.entity.Person;
+import bo.edu.ucb.sis213.manfred.util.ManfredException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -70,11 +71,11 @@ public class SecurityBl {
                 //result.setRefresh("TEST REFRESH TOKEN");
             } else{
                 System.out.println("Las contraseñas no coinciden");
-                throw new RuntimeException("Forbiden the secret and password are wrong");
+                throw new ManfredException("Forbiden the secret and password are wrong");
             }
         } else {
             System.out.println("Usuario no existente");
-            throw new RuntimeException("Forbiden the secret and password are wrong");
+            throw new ManfredException("Forbiden the secret and password are wrong");
         }
         return result;
     }
@@ -93,7 +94,7 @@ public class SecurityBl {
                     .getSubject();
             result = personDao.findByEmail(email);
         } catch (Exception exception) {
-            throw new RuntimeException("Forbiden the secret and password are wrong", exception);
+            throw new ManfredException("Forbiden the secret and password are wrong", exception);
         }
         return result;
     }
@@ -122,7 +123,7 @@ public class SecurityBl {
             result.setRefresh(refreshToken);
         } catch (JWTCreationException exception){
             //Invalid Signing configuration / Couldn't convert Claims.
-            throw new RuntimeException("Error al generar el token", exception);
+            throw new ManfredException("Error al generar el token", exception);
         }
         return result;
     }
