@@ -7,3 +7,9 @@ Accept: application/json
   "email": "camila@gmail.com",
   "password": "ABCabc123"
 }
+
+### Consultamos el usuario autenticado
+GET http://localhost:7777/api/v1/person/
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqcGVyZXpAZ21haWwuY29tIiwicm9sZXMiOlsiQVBMSUNBUl9UUkFCQUpPIl0sImlzcyI6InVjYiIsInJlZnJlc2giOmZhbHNlLCJleHAiOjE2Njk5MDE5NTh9.3Vkr_ZXF_Q-m0C_xpXeLSWXDmWfTOUMgSrsjBpPCsAs

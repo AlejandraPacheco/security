@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 public class SecurityBl {
-    private final static String JWT_SECRET = "TigreCampeon2022";
+    public final static String JWT_SECRET = "TigreCampeon2022";
     private PersonDao personDao;
 
     private ManfredRoleDao manfredRoleDao;
@@ -66,7 +66,7 @@ public class SecurityBl {
                     rolesAsString.add(role.getName());
                     System.out.println("Rol: " + role.getName());
                 }
-                result = generateTokenJwt(credentials.email(), 300, rolesAsString);
+                result = generateTokenJwt(credentials.email(), 30000, rolesAsString);
                 //result.setToken("TEST TOKEN");
                 //result.setRefresh("TEST REFRESH TOKEN");
             } else{

@@ -3,7 +3,9 @@ package bo.edu.ucb.sis213.manfred.dao;
 import bo.edu.ucb.sis213.manfred.entity.Person;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface PersonDao {
     @Select("""
             SELECT

@@ -17,11 +17,6 @@ public class AuthApi {
         this.securityBl = securityBl;
     }
 
-    @GetMapping("/{personId}")
-    public PersonDto test(@PathVariable(name = "personId") Integer personId){
-        return this.securityBl.getPersonByPk(personId);
-    }
-
     @PostMapping()
     public ResponseDto<AuthResDto> authentication(@RequestBody  AuthReqDto authReqDto) {
         if (authReqDto != null && authReqDto.email() != null && authReqDto.password() != null) {

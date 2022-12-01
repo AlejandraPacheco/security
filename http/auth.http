@@ -7,7 +7,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "lramirez@gmail.com",
+  "email": "jperez@gmail.com",
   "password": "ABCabc123"
 }
 
@@ -19,3 +19,5 @@ Accept: application/json
 {
 
 }
+
+### Consultar usuario
